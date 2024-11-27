@@ -1,9 +1,32 @@
 function Home() {
+  const containerStyle = {
+    display: "flex",
+    "flex-direction": "column",
+    "align-items": "center",
+    "justify-content": "center",
+  };
+
+  const imageStyle = {
+    height: "40rem",
+    width: "40rem",
+    "object-fit": "contain",
+  };
+
+  const figureStyle = {
+    margin: 0,
+    padding: 0,
+  };
+
   return (
-    <h1>
-      I hope you know that you are the most precious thing in my entire life.
-      I'm doing everything to give you the life you deserve.
-    </h1>
+    <div style={containerStyle}>
+      <figure style={figureStyle}>
+        <img style={imageStyle} src="/svg/under_construction.svg" />
+      </figure>
+      <h1>
+        Under construction. <br />
+        See you in a minute.
+      </h1>
+    </div>
   );
 }
 
