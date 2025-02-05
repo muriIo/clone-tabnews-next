@@ -1,15 +1,15 @@
 function Home() {
   const containerStyle = {
     display: "flex",
-    "flex-direction": "column",
-    "align-items": "center",
-    "justify-content": "center",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   const imageStyle = {
     height: "40rem",
     width: "40rem",
-    "object-fit": "contain",
+    objectFit: "contain",
   };
 
   const figureStyle = {
