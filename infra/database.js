@@ -11,37 +11,39 @@ async function query(queryObject) {
 
   await client.connect();
 
-  const result = await client.query(queryObject);
+  try {
+    const result = await client.query(queryObject);
 
-  await client.end();
-
-  return result;
+    return result;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await client.end();
+  }
 }
 
 async function getVersion() {
-  const { rows } = await query(
-    "SELECT substring(version() FROM 'PostgreSQL (\\d+\\.\\d+)') AS db_version FROM pg_settings WHERE name = 'max_connections'",
-  );
+  const { rows } = await query("SHOW server_version;");
 
-  const version = rows[0].db_version;
+  const version = rows[0].server_version;
 
   return version;
 }
 
 async function getMaxConnections() {
-  const { rows } = await query(
-    "SELECT setting AS max_connections FROM pg_settings WHERE name = 'max_connections'",
-  );
+  const { rows } = await query("SHOW max_connections;");
 
-  const maxConnections = rows[0].max_connections;
+  const maxConnections = parseInt(rows[0].max_connections);
 
   return maxConnections;
 }
 
 async function getOpenedConnections() {
-  const { rows } = await query(
-    "SELECT (SELECT COUNT(*) FROM pg_stat_activity) AS opened_connections FROM pg_settings WHERE name = 'max_connections'",
-  );
+  const postgresDb = process.env.POSTGRES_DB;
+  const { rows } = await query({
+    text: "SELECT COUNT(*)::int AS opened_connections FROM pg_stat_activity WHERE datname = ($1);",
+    values: [postgresDb],
+  });
 
   const openedConnections = rows[0].opened_connections;
 
