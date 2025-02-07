@@ -6,8 +6,6 @@ async function status(request, response) {
   const maxConnections = await database.getMaxConnections();
   const openedConnections = await database.getOpenedConnections();
 
-  console.log(maxConnections, openedConnections);
-
   response.status(200).json({
     updated_at: updatedAt,
     dependencies: {

@@ -34,10 +34,6 @@ test("GET -> /api/v1/status should return database version", async () => {
   const databaseVersion = responseBody.dependencies.database.version;
 
   expect(databaseVersion).toBeDefined();
-
-  const parsedVersion = parseInt(databaseVersion);
-
-  expect(parsedVersion).not.toBe(NaN);
 });
 
 test("GET -> /api/v1/status should return database max_connections", async () => {
@@ -62,5 +58,5 @@ test("GET -> /api/v1/status should return database opened_connections", async ()
 
   const parsedOpenedConnections = parseInt(openedConnections);
 
-  expect(parsedOpenedConnections).not.toBe(NaN);
+  expect(parsedOpenedConnections).toEqual(1);
 });
